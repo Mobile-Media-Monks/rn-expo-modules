@@ -7,18 +7,22 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "open:ios": "xed ios",
+    "open:android": "open -a \"Android Studio\" android"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "1.23.1",
     "date-fns": "^3.6.0",
     "expo": "~51.0.28",
+    "expo-build-properties": "~0.12.5",
     "expo-constants": "~16.0.2",
     "expo-dev-client": "~4.0.25",
     "expo-haptics": "~13.0.1",
     "expo-linear-gradient": "~13.0.2",
     "expo-linking": "~6.3.1",
+    "expo-location": "~17.0.1",
     "expo-router": "~3.5.23",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",

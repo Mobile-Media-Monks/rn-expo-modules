@@ -1,10 +1,43 @@
 import { theme } from "@/constants/theme";
-import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
-import { Link, Redirect, Tabs } from "expo-router";
+import { Entypo, Feather } from "@expo/vector-icons";
+import { Redirect, Tabs } from "expo-router";
 import { useUserStore } from "@/store/userStore";
-import { Pressable } from "react-native";
 
-const hasFinishedOnboarding = false;
+const ROUTES: {
+  name: string;
+  title: "Home" | "Profile" | "NativeView";
+}[] = [
+  {
+    name: "(home)",
+    title: "Home",
+  },
+  {
+    name: "profile",
+    title: "Profile",
+  },
+  {
+    name: "native",
+    title: "NativeView",
+  },
+];
+
+function getComponentByRouteName({
+  routeName,
+  ...props
+}: {
+  routeName: (typeof ROUTES)["0"]["title"];
+  color: string;
+  size: number;
+}) {
+  switch (routeName) {
+    case "Home":
+      return <Entypo name="leaf" {...props} />;
+    case "Profile":
+      return <Feather name="activity" {...props} />;
+    case "NativeView":
+      return <Feather name="monitor" {...props} />;
+  }
+}
 
 export default function Layout() {
   const hasFinishedOnboarding = useUserStore(
@@ -17,27 +50,20 @@ export default function Layout() {
 
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: theme.colorGreen }}>
-      <Tabs.Screen
-        name="(home)"
-        options={{
-          title: "Home",
-          tabBarShowLabel: false,
-          headerShown: false,
-          tabBarIcon: ({ size, color }) => (
-            <Entypo name="leaf" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarShowLabel: false,
-          tabBarIcon: ({ size, color }) => (
-            <Feather name="user" size={size} color={color} />
-          ),
-        }}
-      />
+      {ROUTES.map((item, index) => {
+        return (
+          <Tabs.Screen
+            name={item.name}
+            options={{
+              title: item.title,
+              tabBarShowLabel: false,
+              headerShown: false,
+              tabBarIcon: ({ size, color }) =>
+                getComponentByRouteName({ routeName: item.title, size, color }),
+            }}
+          />
+        );
+      })}
     </Tabs>
   );
 }
